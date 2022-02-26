@@ -10,4 +10,9 @@ public class HomeController {
 		System.out.println("income");
 		return "Hello Sung~!";
 	}
+	@RequestMapping("/index2")
+	public String aaa() {
+		System.out.println("income");
+		return "Hello Sung2~!";
+	}
 }
