@@ -8,7 +8,7 @@ public class HomeController {
 	@RequestMapping("/index")
 	public String asdf() {
 		System.out.println("income");
-		return "Hello Sung~! 변경44";
+		return "Hello Sung~! 변경55";
 	}
 	@RequestMapping("/index2")
 	public String aaa() {
