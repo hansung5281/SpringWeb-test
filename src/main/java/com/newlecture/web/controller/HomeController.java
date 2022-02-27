@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
+	
 	@RequestMapping("/index")
 	public String asdf() {
 		System.out.println("income");
