@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newlecture.web.dao.NoticeDao">
+	<resultMap type="com.newlecture.web.entity.NoticeView" id="noticeViewMap">
+		<result property="memberName" column="memberName"/>
+	</resultMap>
+	
+	<select id="getViewList" resultMap="noticeViewMap">
+		select * from noticeView
+		<trim prefix="WHERE" prefixOverrides="AND | OR">
+			<if test="query != null and query != ''">
+				${field} like '%${query}%'
+			</if>
+			and pub = #{pub}
+		</trim> 
+		order by regdate desc 
+		limit #{offset}, #{size}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		select count(id) as count from notice
+		<where>
+			<if test="query != null and query != ''">
+				${field} like '%${query}%'
+			</if>
+			and pub = #{pub}
+		</where>
+	</select>
+	
+	<select id="getView" resultType="com.newlecture.web.entity.NoticeView">
+		select * from noticeView 
+		where id = #{id}
+	</select>
+	
+	<select id="getNext" resultType="com.newlecture.web.entity.Notice">
+		select * from notice
+		where regdate &gt; (select regdate from notice where id = #{id})
+		limit 1
+	</select>
+		<select id="getPrev" resultType="com.newlecture.web.entity.Notice">
+		select * from notice
+		where regdate &lt; (select regdate from notice where id = #{id})
+		order by regdate desc
+		limit 1
+	</select>
+	
+	<update id="update" parameterType="com.newlecture.web.entity.Notice">
+		update notice
+		set
+			title = #{title}, 
+			content = #{content}, 
+			hit = #{hit},
+			pub = #{pub}
+		where id = #{id}
+	</update>
+	<insert id="insert" parameterType="com.newlecture.web.entity.Notice">
+		insert into notice(title, content, memberId)
+		values(#{title}, #{content}, #{memberId})
+	</insert>
+	<delete id="delete">
+		delete from notice
+		where id =#{id}
+	</delete>
+	<delete id="deleteAll">
+		delete from notice
+		where id in 
+		<foreach item="id" index="index" collection="ids"
+        		open="ID in (" separator="," close=")">
+          		#{id}
+    	</foreach>
+	</delete>
+	<update id="updatePubAll">
+			update notice
+			set
+				pub = #{pub}
+			where id in
+			<foreach item="id" index="index" collection="ids"
+        		open="ID in (" separator="," close=")">
+          		#{id}
+    		</foreach>
+			
+			
+<!-- 		update notice -->
+<!-- 		set -->
+<!-- 			pub = case id -->
+<!-- 				<foreach item="id" collection="pubIds"> -->
+<!-- 					when #{id} then 1 -->
+<!-- 				</foreach> -->
+<!-- 				<foreach item="id" collection="closeIds"> -->
+<!-- 					when #{id} then 0 -->
+<!-- 				</foreach> -->
+<!-- 				end -->
+<!-- 		where id in( -->
+<!-- 				<foreach item="id" collection="pubIds"> -->
+<!-- 					#{id} -->
+<!-- 				</foreach> -->
+<!-- 				, -->
+<!-- 				<foreach item="id" collection="closeIds"> -->
+<!-- 					#{id} -->
+<!-- 				</foreach> -->
+<!-- 		) -->
+
+	</update>
+</mapper>

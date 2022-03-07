@@ -1,4 +1,4 @@
-package com.newlecture.web.controller.customer;
+package com.newlecture.web.controller.admin.board;
 
 import java.util.List;
 
@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.newlecture.web.entity.Notice;
 import com.newlecture.web.entity.NoticeView;
 import com.newlecture.web.service.NoticeService;
 
-@Controller
-@RequestMapping("/customer/notice/")
+@Controller("adminNoticeController")
+@RequestMapping("/admin/board/notice/")
 public class NoticeController {
 	
 	@Autowired
@@ -20,18 +21,20 @@ public class NoticeController {
 	@RequestMapping("list")
 	public String list(Model model) {
 		
-		int page = 1;
-		String field = "title";
-		String query = "";
 		boolean pub = true;
-		List<NoticeView> list = service.getViewList(page,field,query,pub);
+		List<NoticeView> list = service.getViewList(pub);
 		
-		model.addAttribute("list",list);
-		
-		return "customer.notice.list";
+		return "admin.board.notice.list";
 	}
 	@RequestMapping("detail")
 	public String detail() {
-		return "customer.notice.detail";
+		
+		Notice notice = service.getView(1);
+		
+		return "admin.board.notice.detail";
+	}
+	@RequestMapping("reg")
+	public String reg() {
+		return "admin.board.notice.reg";
 	}
 }
