@@ -8,7 +8,7 @@
 	</resultMap>
 	
 	<select id="getViewList" resultMap="noticeViewMap">
-		select * from noticeView
+		select * from noticeView 
 		<trim prefix="WHERE" prefixOverrides="AND | OR">
 			<if test="query != null and query != ''">
 				${field} like '%${query}%'
