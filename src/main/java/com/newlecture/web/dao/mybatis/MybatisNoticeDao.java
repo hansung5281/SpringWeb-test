@@ -26,6 +26,7 @@ public class MybatisNoticeDao implements NoticeDao{
 	public List<NoticeView> getViewList(int offset, int size, String field, String query, boolean pub) {
 		// TODO Auto-generated method stub
 		NoticeDao mapper = sqlSession.getMapper(NoticeDao.class);
+		System.out.println("asdfasdf");
 		return mapper.getViewList(offset, size, field, query, pub);
 	}
 
