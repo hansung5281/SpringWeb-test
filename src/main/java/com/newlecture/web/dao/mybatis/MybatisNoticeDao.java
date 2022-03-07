@@ -13,8 +13,8 @@ import com.newlecture.web.entity.NoticeView;
 @Repository
 public class MybatisNoticeDao implements NoticeDao{
 
-	private NoticeDao mapper;
-	
+	private NoticeDao mapper ;
+	 
 	@Autowired
 	public MybatisNoticeDao(SqlSession sqlSession) {
 		mapper = sqlSession.getMapper(NoticeDao.class);
